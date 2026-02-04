@@ -1,0 +1,24 @@
+# WeChat-Archiver 依赖包
+
+# RSS 解析
+feedparser>=6.0.10
+
+# HTTP 请求
+requests>=2.31.0
+
+# HTML 转 Markdown
+html2text>=2020.1.16
+
+# YAML 配置解析
+PyYAML>=6.0.1
+
+# Git 操作
+gitpython>=3.1.40
+
+# HTML 解析（用于提取图片）
+beautifulsoup4>=4.12.2
+lxml>=4.9.3
+
+# Web 管理界面
+flask>=3.0.0
+flask-cors>=4.0.0

@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # wewe-rss: 微信公众号 RSS 生成服务
+  wewe-rss:
+    image: cooderl/wewe-rss-sqlite:latest
+    container_name: wewe-rss
+    ports:
+      - "4000:4000"
+    environment:
+      - PASSWORD=admin123
+      # 定时刷新：每天凌晨3点、早上9点、下午3点、晚上9点（每6小时一次）
+      - CRON_EXPRESSION=0 3,9,15,21 * * *
+    volumes:
+      - ./data/wewe-rss:/app/data
+    restart: always
+
+  # wechat-archiver: 文章归档服务
+  wechat-archiver:
+    build: .
+    container_name: wechat-archiver
+    ports:
+      - "5000:5000"    # Web 管理界面
+    volumes:
+      # 挂载配置文件和数据目录
+      - ./config.yaml:/app/config.yaml:rw
+      - ./data:/app/data:rw
+    environment:
+      # TZ: Asia/Shanghai  # 可选：设置时区
+    depends_on:
+      - wewe-rss
+    restart: always
+
+volumes:
+  # 持久化数据卷
+  wewe-rss-data:
+  archiver-data:
